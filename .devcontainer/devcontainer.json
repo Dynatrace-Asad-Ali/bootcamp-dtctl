@@ -17,16 +17,39 @@
   // OPTIONAL (tenant selection):
   //   DT_ACTIVE   — which context to connect MCP to (defaults to DT_1_NAME)
   //                 change this secret and rebuild to switch tenants
-  "secrets": [
-    "DT_1_NAME",
-    "DT_1_URL",
-    "DT_1_TOKEN",
-    "DT_2_NAME",
-    "DT_2_URL",
-    "DT_2_TOKEN",
-    "DT_3_NAME",
-    "DT_3_URL",
-    "DT_3_TOKEN",
-    "DT_ACTIVE"
-  ]
+  "secrets": {
+    "DT_1_NAME": {
+      "description": "Label for the first Dynatrace tenant, e.g. 'prod'",
+      "documentationUrl": "https://github.com/dynatrace-oss/dtctl#install"
+    },
+    "DT_1_URL": {
+      "description": "Tenant URL, e.g. 'https://abc123.apps.dynatrace.com'",
+      "documentationUrl": "https://github.com/dynatrace-oss/dtctl#install"
+    },
+    "DT_1_TOKEN": {
+      "description": "Dynatrace API platform token for the first tenant",
+      "documentationUrl": "https://github.com/dynatrace-oss/dtctl#install"
+    },
+    "DT_2_NAME": {
+      "description": "(Optional) Label for a second Dynatrace tenant"
+    },
+    "DT_2_URL": {
+      "description": "(Optional) URL for the second Dynatrace tenant"
+    },
+    "DT_2_TOKEN": {
+      "description": "(Optional) API token for the second Dynatrace tenant"
+    },
+    "DT_3_NAME": {
+      "description": "(Optional) Label for a third Dynatrace tenant"
+    },
+    "DT_3_URL": {
+      "description": "(Optional) URL for the third Dynatrace tenant"
+    },
+    "DT_3_TOKEN": {
+      "description": "(Optional) API token for the third Dynatrace tenant"
+    },
+    "DT_ACTIVE": {
+      "description": "(Optional) Which context MCP connects to — defaults to DT_1_NAME"
+    }
+  }
 }
