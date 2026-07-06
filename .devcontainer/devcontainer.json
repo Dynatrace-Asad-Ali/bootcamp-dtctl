@@ -1,6 +1,16 @@
 {
   "name": "New Seller Bootcamp",
   "postStartCommand": "bash .devcontainer/scripts/setup-dynatrace.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "github.github-vscode-theme",
+        "github.vscode-pull-request-github",
+        "golang.go"
+      ]
+    }
+  },
 
   // Declare expected Codespace secrets so GitHub prompts for them when creating the codespace.
   // Set these at: github.com/<org>/<repo>/settings/secrets/codespaces
