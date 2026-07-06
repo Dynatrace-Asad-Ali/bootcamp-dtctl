@@ -139,11 +139,29 @@
       "skillPath": "skills/dt-sec-insights/SKILL.md",
       "computedHash": "d63df29dc209dc090c055219e3749cfa69bb5dcff7cabd9e5acdb21e4c2e526c"
     },
+    "dtctl": {
+      "source": "dynatrace-oss/dtctl",
+      "sourceType": "github",
+      "skillPath": "skills/dtctl/SKILL.md",
+      "computedHash": "1933343fabd5d81d7478de0a7049f3f995b4e58065e26e625324c9b8e9c74876"
+    },
+    "dtctl-release": {
+      "source": "dynatrace-oss/dtctl",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/dtctl-release/SKILL.md",
+      "computedHash": "57e9caf75215ba4f748fd5a255d08ef8170fe1f5c9733c8f7f11466b1170cb49"
+    },
     "dynatrace-kpi-dashboard-generator": {
       "source": "SudoSmitty/dynatrace-kpi-dashboard-generator",
       "sourceType": "github",
       "skillPath": "skills/dynatrace-kpi-dashboard-generator/SKILL.md",
       "computedHash": "90bb0316681dc89d2c158504699aef1f8904501f24c09533e273bfc79f764d21"
+    },
+    "pr-review": {
+      "source": "dynatrace-oss/dtctl",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/pr-review/SKILL.md",
+      "computedHash": "a8b5729267fc8515b627d7ab4c9449e4f29511a88fc95490a2b58e8a3e7ef10e"
     }
   }
 }
