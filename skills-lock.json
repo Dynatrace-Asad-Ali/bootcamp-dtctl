@@ -138,6 +138,12 @@
       "sourceType": "github",
       "skillPath": "skills/dt-sec-insights/SKILL.md",
       "computedHash": "d63df29dc209dc090c055219e3749cfa69bb5dcff7cabd9e5acdb21e4c2e526c"
+    },
+    "dynatrace-kpi-dashboard-generator": {
+      "source": "SudoSmitty/dynatrace-kpi-dashboard-generator",
+      "sourceType": "github",
+      "skillPath": "skills/dynatrace-kpi-dashboard-generator/SKILL.md",
+      "computedHash": "90bb0316681dc89d2c158504699aef1f8904501f24c09533e273bfc79f764d21"
     }
   }
 }
