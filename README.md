@@ -54,3 +54,23 @@ For dtctl operations add the scopes relevant to what you need (workflows, dashbo
 | `dtctl` | [dynatrace-oss/dtctl](https://github.com/dynatrace-oss/dtctl) (installed on first start) |
 
 To update skills: `npx skills update`
+
+## Attribution & licensing
+
+This repository is licensed under the [Apache License 2.0](LICENSE).
+
+It redistributes agent skills copied from third-party projects. Their original
+copyright and license notices are collected in [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES)
+and [NOTICE](NOTICE), and must be retained in any redistribution. Skill provenance
+is tracked in [`skills-lock.json`](skills-lock.json).
+
+| Skills | Source | License |
+|---|---|---|
+| `dt-*` (`dt-dql-essentials`, `dt-obs-*`, `dt-alerting`, `dt-sec-insights`, `dt-app-*`, `dt-platform-costs`, `dt-migration`, `dt-js-runtime`) | [Dynatrace/dynatrace-for-ai](https://github.com/Dynatrace/dynatrace-for-ai) | Apache-2.0 |
+| `dtctl`, `dtctl-release`, `pr-review` | [dynatrace-oss/dtctl](https://github.com/dynatrace-oss/dtctl) | Apache-2.0 |
+| `dynatrace-kpi-dashboard-generator` | [SudoSmitty/dynatrace-kpi-dashboard-generator](https://github.com/SudoSmitty/dynatrace-kpi-dashboard-generator) | No upstream license — included with the author's permission |
+
+> **`dynatrace-kpi-dashboard-generator`** has no license file in its upstream
+> repository and is redistributed here with the express permission of its
+> author. For a cleaner provenance trail, consider asking the author to add an
+> explicit open-source license (e.g. Apache-2.0 or MIT) upstream.

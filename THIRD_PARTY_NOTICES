@@ -1,0 +1,79 @@
+THIRD-PARTY NOTICES
+===================
+
+This repository bundles ("vendors") agent skill content copied from the
+third-party projects listed below. Each project's original license and
+attribution notices are reproduced here and must be retained in any
+redistribution. Provenance for every skill is tracked in `skills-lock.json`.
+
+--------------------------------------------------------------------------------
+1. Dynatrace observability & platform skills
+--------------------------------------------------------------------------------
+
+Skills:
+  dt-alerting, dt-app-dashboards, dt-app-notebooks, dt-dql-essentials,
+  dt-js-runtime, dt-migration, dt-obs-android, dt-obs-aws, dt-obs-azure,
+  dt-obs-flutter, dt-obs-frontends, dt-obs-gcp, dt-obs-hosts, dt-obs-ios-sdk,
+  dt-obs-kubernetes, dt-obs-logs, dt-obs-predictive-analytics, dt-obs-problems,
+  dt-obs-react-native, dt-obs-services, dt-obs-tracing, dt-platform-costs,
+  dt-sec-insights
+
+Source:  https://github.com/Dynatrace/dynatrace-for-ai
+License: Apache License, Version 2.0 (see LICENSE in this repository)
+
+--------------------------------------------------------------------------------
+2. dtctl skills
+--------------------------------------------------------------------------------
+
+Skills:  dtctl, dtctl-release, pr-review
+
+Source:  https://github.com/dynatrace-oss/dtctl
+License: Apache License, Version 2.0 (see LICENSE in this repository)
+
+The upstream project ships a NOTICE file, reproduced below verbatim as
+required by section 4(d) of the Apache License, Version 2.0:
+
+    dtctl
+    Copyright 2022-2026 DYNATRACE LLC
+
+    This product includes software developed by Dynatrace LLC
+    (https://www.dynatrace.com/).
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+    (The upstream NOTICE additionally enumerates the third-party Go
+    dependencies of the dtctl binary — Apache-2.0, MIT, BSD-2/3-Clause, and
+    MPL-2.0 licensed components. Those dependencies are NOT redistributed by
+    this repository, which vendors only the dtctl agent-skill documentation.
+    See https://github.com/dynatrace-oss/dtctl/blob/main/NOTICE for the full
+    dependency list.)
+
+--------------------------------------------------------------------------------
+3. dynatrace-kpi-dashboard-generator skill
+--------------------------------------------------------------------------------
+
+Skill:   dynatrace-kpi-dashboard-generator
+
+Source:  https://github.com/SudoSmitty/dynatrace-kpi-dashboard-generator
+License: No license file published upstream. Redistributed here with the
+         author's permission.
+
+    NOTE: The upstream repository does not publish a license file. This
+    content is included with the express permission of its author. For a
+    cleaner provenance trail, consider asking the author to add an explicit
+    open-source license (e.g. Apache-2.0 or MIT) upstream.
+
+--------------------------------------------------------------------------------
+
+Full text of the Apache License, Version 2.0 is available in the LICENSE file
+at the root of this repository and at http://www.apache.org/licenses/LICENSE-2.0
