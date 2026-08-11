@@ -15,51 +15,22 @@
   // Declare expected Codespace secrets so GitHub prompts for them when creating the codespace.
   // Set these at: github.com/<org>/<repo>/settings/secrets/codespaces
   //
-  // REQUIRED (at least one context):
-  //   DT_1_NAME   — label for the first tenant, e.g. "prod"
-  //   DT_1_URL    — tenant URL,  e.g. "https://abc123.apps.dynatrace.com"
-  //   DT_1_TOKEN  — API token
-  //
-  // OPTIONAL (additional tenants):
-  //   DT_2_NAME / DT_2_URL / DT_2_TOKEN
-  //   DT_3_NAME / DT_3_URL / DT_3_TOKEN
-  //
-  // OPTIONAL (tenant selection):
-  //   DT_ACTIVE   — which context to connect MCP to (defaults to DT_1_NAME)
-  //                 change this secret and rebuild to switch tenants
+  // REQUIRED:
+  //   DT_NAME   — label for the tenant, e.g. "prod"
+  //   DT_URL    — tenant URL,  e.g. "https://abc123.apps.dynatrace.com"
+  //   DT_TOKEN  — API token
   "secrets": {
-    "DT_1_NAME": {
-      "description": "Label for the first Dynatrace tenant, e.g. 'prod'",
+    "DT_NAME": {
+      "description": "Label for the Dynatrace tenant, e.g. 'prod'",
       "documentationUrl": "https://github.com/dynatrace-oss/dtctl#install"
     },
-    "DT_1_URL": {
+    "DT_URL": {
       "description": "Tenant URL, e.g. 'https://abc123.apps.dynatrace.com'",
       "documentationUrl": "https://github.com/dynatrace-oss/dtctl#install"
     },
-    "DT_1_TOKEN": {
-      "description": "Dynatrace API platform token for the first tenant",
+    "DT_TOKEN": {
+      "description": "Dynatrace API platform token",
       "documentationUrl": "https://github.com/dynatrace-oss/dtctl#install"
-    },
-    "DT_2_NAME": {
-      "description": "(Optional) Label for a second Dynatrace tenant"
-    },
-    "DT_2_URL": {
-      "description": "(Optional) URL for the second Dynatrace tenant"
-    },
-    "DT_2_TOKEN": {
-      "description": "(Optional) API token for the second Dynatrace tenant"
-    },
-    "DT_3_NAME": {
-      "description": "(Optional) Label for a third Dynatrace tenant"
-    },
-    "DT_3_URL": {
-      "description": "(Optional) URL for the third Dynatrace tenant"
-    },
-    "DT_3_TOKEN": {
-      "description": "(Optional) API token for the third Dynatrace tenant"
-    },
-    "DT_ACTIVE": {
-      "description": "(Optional) Which context MCP connects to — defaults to DT_1_NAME"
     }
   }
 }

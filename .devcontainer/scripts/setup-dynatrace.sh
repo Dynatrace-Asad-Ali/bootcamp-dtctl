@@ -1,23 +1,17 @@
 #!/usr/bin/env bash
 # Runs on every codespace start (postStartCommand).
-# Installs dtctl, configures Dynatrace contexts from Codespace secrets,
+# Installs dtctl, configures the Dynatrace context from Codespace secrets,
 # and writes MCP server configs for Claude Code and VS Code.
 #
 # Tenant secrets (set at github.com/<org>/<repo>/settings/secrets/codespaces):
 #
-#   DT_1_NAME   label for first tenant, e.g. "prod"
-#   DT_1_URL    tenant URL, e.g. "https://abc123.apps.dynatrace.com"
-#   DT_1_TOKEN  API platform token
-#
-#   DT_2_NAME / DT_2_URL / DT_2_TOKEN  (optional second tenant)
-#   DT_3_NAME / DT_3_URL / DT_3_TOKEN  (optional third tenant)
-#
-#   DT_ACTIVE   which context MCP connects to (defaults to DT_1_NAME)
+#   DT_NAME   label for the tenant, e.g. "prod"
+#   DT_URL    tenant URL, e.g. "https://abc123.apps.dynatrace.com"
+#   DT_TOKEN  API platform token
 
 set -uo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-CONFIGURED=0
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 info()  { echo "  $*"; }
@@ -43,97 +37,30 @@ if [[ ! -d "${REPO_ROOT}/.agents/skills/dtctl" ]]; then
     || warn "dtctl skill install failed (non-fatal)"
 fi
 
-# ── Configure dtctl contexts ──────────────────────────────────────────────────
-header "Dynatrace contexts"
+# ── Configure dtctl context ───────────────────────────────────────────────────
+header "Dynatrace context"
 
-configure_context() {
-  local name="$1" url="$2" token="$3"
-  [[ -z "$name" || -z "$url" || -z "$token" ]] && return 0
+ACTIVE_NAME="${DT_NAME:-}"
+ACTIVE_URL="${DT_URL:-}"
+ACTIVE_TOKEN="${DT_TOKEN:-}"
 
-  local cred_ref="${name}-token"
-  dtctl config set-context "$name" --environment "$url" --token-ref "$cred_ref" 2>/dev/null
-  dtctl config set-credentials "$cred_ref" --token "$token" 2>/dev/null
-  ok "Context: $name  →  $url"
-  CONFIGURED=$((CONFIGURED + 1))
-}
-
-configure_context "${DT_1_NAME:-}" "${DT_1_URL:-}" "${DT_1_TOKEN:-}"
-configure_context "${DT_2_NAME:-}" "${DT_2_URL:-}" "${DT_2_TOKEN:-}"
-configure_context "${DT_3_NAME:-}" "${DT_3_URL:-}" "${DT_3_TOKEN:-}"
-
-if [[ "$CONFIGURED" -eq 0 ]]; then
-  warn "No DT_*_NAME/URL/TOKEN secrets found — skipping context setup."
-  warn "Add Codespace secrets: DT_1_NAME, DT_1_URL, DT_1_TOKEN"
+if [[ -z "$ACTIVE_NAME" || -z "$ACTIVE_URL" || -z "$ACTIVE_TOKEN" ]]; then
+  warn "No DT_NAME/URL/TOKEN secrets found — skipping context setup."
+  warn "Add Codespace secrets: DT_NAME, DT_URL, DT_TOKEN"
   warn "See: github.com/<your-org>/<repo>/settings/secrets/codespaces"
   exit 0
 fi
 
-# ── Switch active context ─────────────────────────────────────────────────────
-ACTIVE="${DT_ACTIVE:-${DT_1_NAME:-}}"
-if [[ -n "$ACTIVE" ]]; then
-  dtctl ctx "$ACTIVE" 2>/dev/null && ok "Active context: $ACTIVE"
-fi
+CRED_REF="${ACTIVE_NAME}-token"
+dtctl config set-context "$ACTIVE_NAME" --environment "$ACTIVE_URL" --token-ref "$CRED_REF" 2>/dev/null
+dtctl config set-credentials "$CRED_REF" --token "$ACTIVE_TOKEN" 2>/dev/null
+ok "Context: $ACTIVE_NAME  →  $ACTIVE_URL"
 
-# ── Resolve URL + token for the active context ────────────────────────────────
-ACTIVE_URL=""
-ACTIVE_TOKEN=""
-for i in 1 2 3; do
-  n_var="DT_${i}_NAME"
-  u_var="DT_${i}_URL"
-  t_var="DT_${i}_TOKEN"
-  if [[ "${!n_var:-}" == "$ACTIVE" ]]; then
-    ACTIVE_URL="${!u_var:-}"
-    ACTIVE_TOKEN="${!t_var:-}"
-    break
-  fi
-done
-
-# ── Write MCP configs ─────────────────────────────────────────────────────────
-header "MCP server"
-
-if [[ -z "$ACTIVE_URL" || -z "$ACTIVE_TOKEN" ]]; then
-  warn "Could not resolve URL/token for active context '$ACTIVE' — skipping MCP config."
-  exit 0
-fi
-
-MCP_URL="${ACTIVE_URL%/}/platform-reserved/mcp-gateway/v0.1/servers/dynatrace-mcp/mcp"
-
-# Claude Code — settings.local.json is gitignored and loaded automatically
-mkdir -p "${REPO_ROOT}/.claude"
-cat > "${REPO_ROOT}/.claude/settings.local.json" <<EOF
-{
-  "mcpServers": {
-    "dynatrace": {
-      "url": "${MCP_URL}",
-      "headers": {
-        "Authorization": "Bearer ${ACTIVE_TOKEN}"
-      }
-    }
-  }
-}
-EOF
-ok "Claude Code MCP  →  ${MCP_URL}"
-
-# VS Code — .vscode/mcp.json is gitignored
-mkdir -p "${REPO_ROOT}/.vscode"
-cat > "${REPO_ROOT}/.vscode/mcp.json" <<EOF
-{
-  "servers": {
-    "dynatrace": {
-      "url": "${MCP_URL}",
-      "headers": {
-        "Authorization": "Bearer ${ACTIVE_TOKEN}"
-      }
-    }
-  }
-}
-EOF
-ok "VS Code MCP       →  ${MCP_URL}"
+dtctl ctx "$ACTIVE_NAME" 2>/dev/null && ok "Active context: $ACTIVE_NAME"
 
 # ── Verify connection ─────────────────────────────────────────────────────────
 header "Connection check"
 dtctl doctor 2>&1 || warn "dtctl doctor reported issues — check token scopes"
 
 echo ""
-echo "Setup complete. Active tenant: ${ACTIVE} (${ACTIVE_URL})"
-echo "To switch tenants: update DT_ACTIVE secret and rebuild the codespace"
+echo "Setup complete. Active tenant: ${ACTIVE_NAME} (${ACTIVE_URL})"
