@@ -46,7 +46,7 @@ ACTIVE_TOKEN="${DT_TOKEN_FOR_DTCTL:-}"
 
 if [[ -z "$ACTIVE_NAME" || -z "$ACTIVE_URL" || -z "$ACTIVE_TOKEN" ]]; then
   warn "No DT_NAME/URL/TOKEN secrets found — skipping context setup."
-  warn "Add Codespace secrets: DT_NAME, DT_URL, DT_TOKEN"
+  warn "Add Codespace secrets: DT_NAME, DT_URL, DT_TOKEN_FOR_DTCTL"
   warn "See: github.com/<your-org>/<repo>/settings/secrets/codespaces"
   exit 0
 fi
