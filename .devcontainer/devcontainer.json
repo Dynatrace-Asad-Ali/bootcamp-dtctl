@@ -1,5 +1,5 @@
 {
-  "name": "New Seller Bootcamp",
+  "name": "Bootcamp dtctl",
   "postStartCommand": "bash .devcontainer/scripts/setup-dynatrace.sh",
   "customizations": {
     "vscode": {
