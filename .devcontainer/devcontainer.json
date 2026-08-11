@@ -28,7 +28,7 @@
       "description": "Tenant URL, e.g. 'https://abc123.apps.dynatrace.com'",
       "documentationUrl": "https://github.com/dynatrace-oss/dtctl#install"
     },
-    "DT_TOKEN": {
+    "DT_TOKEN_FOR_DTCTL": {
       "description": "Dynatrace API platform token",
       "documentationUrl": "https://github.com/dynatrace-oss/dtctl#install"
     }

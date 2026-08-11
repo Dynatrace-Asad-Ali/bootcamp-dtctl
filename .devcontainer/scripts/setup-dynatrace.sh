@@ -7,7 +7,7 @@
 #
 #   DT_NAME   label for the tenant, e.g. "prod"
 #   DT_URL    tenant URL, e.g. "https://abc123.apps.dynatrace.com"
-#   DT_TOKEN  API platform token
+#   DT_TOKEN_FOR_DTCTL  API platform token
 
 set -uo pipefail
 
@@ -42,7 +42,7 @@ header "Dynatrace context"
 
 ACTIVE_NAME="${DT_NAME:-}"
 ACTIVE_URL="${DT_URL:-}"
-ACTIVE_TOKEN="${DT_TOKEN:-}"
+ACTIVE_TOKEN="${DT_TOKEN_FOR_DTCTL:-}"
 
 if [[ -z "$ACTIVE_NAME" || -z "$ACTIVE_URL" || -z "$ACTIVE_TOKEN" ]]; then
   warn "No DT_NAME/URL/TOKEN secrets found — skipping context setup."
