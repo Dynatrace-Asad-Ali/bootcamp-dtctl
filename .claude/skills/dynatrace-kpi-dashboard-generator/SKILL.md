@@ -1,6 +1,6 @@
 ---
 name: dynatrace-kpi-dashboard-generator
-description: Generate a Dynatrace Gen 3 **KPI dashboard** (15–20 business KPIs, required map tile, branded section dividers) and a matching 30‑minute BizEvents injector for a named company, then deploy both via `dtctl`. Use this skill ONLY when the user explicitly asks for a Dynatrace KPI dashboard, business-event KPI demo, BizEvents injector, or a "KPI dashboard for <company>" — do NOT use for generic Dynatrace dashboards (SRE, infra, k8s, services, RUM) or for editing existing non-KPI dashboards. Triggers include phrases like "generate a KPI dashboard", "build a BizEvents demo for <company>", "spin up a KPI dashboard + injector", "/generate-kpi-dashboard". Requires `dtctl` authenticated to a Dynatrace Gen 3 tenant.
+description: Generate a Dynatrace Gen 3 **KPI dashboard** (15–20 business KPIs, required map tile, branded section dividers) and a matching 30‑minute BizEvents injector for a named company, then deploy both via `dtctl`. 
 ---
 
 # Business Event Generator Agent
@@ -75,6 +75,10 @@ When invoked, the agent asks for (or infers from the user's request):
 
 - **Company name** (required) — used for folder name, dashboard title, and
   `event.provider` (e.g. `acme.event.provider`).
+- **Your full name** (required) — ask the user explicitly: *"What is your full
+  name?"* Use the answer to personalise the dashboard title and workflow task
+  name (see Phases 2 and 6). Do not infer it from git config, email, or any
+  other source — always ask.
 - **Industry / business domain** (optional) — research hint for KPI choice.
 - **Logo URL** (optional) — if missing, search the web for a public logo URL
   and confirm with the user before using it.
@@ -122,6 +126,7 @@ dashboards/<Company>/
   LEARNINGS.md                    # iteration notes (DQL patterns, pitfalls)
   SALES-PITCH.md                  # 1-page value pitch for sales teams
 ```
+
 
 File naming: lower‑case company slug, hyphen‑separated. Versioned dashboards
 are `*-dashboard-v2.json` — **never overwrite v1**. In‑workflow task names
@@ -171,9 +176,13 @@ Two side‑by‑side markdown tiles (NOT one combined tile, NOT HTML):
 
 "41":  # Title tile
   type: markdown
-  content: "# <Company> | Operations Dashboard\n\nReal-time KPI monitoring..."
+  content: "# <Company> | Operations Dashboard — <Full Name>\n\nReal-time KPI monitoring..."
   layout: { x: 6, y: 0, w: 18, h: 2 }
 ```
+
+The dashboard `name` field (top-level, shown in the Dynatrace UI listing) must
+also include the user's full name:
+`"<Company> | Operations Dashboard — <Full Name>"`
 
 Markdown tiles do not reliably support `<div>`, `<img>`, or other inline
 HTML. Use pure markdown image syntax (`![](url)`).
@@ -488,7 +497,10 @@ is exactly one injector workflow per tenant; new companies are added as
 
 3. **If a workflow exists (the normal case):**
    - `dtctl get workflow <id> -o json --plain > .tmp/workflow.json`
-   - Append a new task keyed `<company>_v1` (or `_v2` on iteration).
+   - Append a new task keyed `<company>_<firstname>_v1` (or `_v2` on
+     iteration), where `<firstname>` is the user's first name lowercased
+     (e.g. `walgreens_asad_v1`). This makes tasks uniquely identifiable
+     per SE inside a shared workflow.
    - Use a **unique** `position.{x, y}` — duplicates produce a 400 error.
    - Set `predecessors: []` so tasks run in parallel.
    - `dtctl apply -f .tmp/workflow.json`
@@ -523,8 +535,8 @@ is exactly one injector workflow per tenant; new companies are added as
 
 ### Versioning
 
-- First iteration: `<company>-dashboard-v1.json`, task `<company>_v1`.
-- Updates: `<company>-dashboard-v2.json`, task `<company>_v2`.
+- First iteration: `<company>-dashboard-v1.json`, task `<company>_<firstname>_v1`.
+- Updates: `<company>-dashboard-v2.json`, task `<company>_<firstname>_v2`.
 - Never overwrite v1 files.
 
 ---
