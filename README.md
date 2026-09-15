@@ -1,4 +1,4 @@
-# New Seller Bootcamp
+# Bootcamp dtctl
 
 Dynatrace observability workspace with AI agent skills and MCP server integration.
 
@@ -12,30 +12,17 @@ Go to **github.com → your profile → Settings → Codespaces → Secrets** (f
 
 | Secret | Required | Example | Description |
 |---|---|---|---|
-| `DT_1_NAME` | Yes | `prod` | Label for your first tenant |
-| `DT_1_URL` | Yes | `https://abc123.apps.dynatrace.com` | Tenant URL |
-| `DT_1_TOKEN` | Yes | `dt0s16.XXX...` | Platform API token |
-| `DT_2_NAME` | No | `staging` | Second tenant label |
-| `DT_2_URL` | No | `https://def456.apps.dynatrace.com` | Second tenant URL |
-| `DT_2_TOKEN` | No | `dt0s16.YYY...` | Second tenant token |
-| `DT_3_NAME` | No | `dev` | Third tenant label |
-| `DT_3_URL` | No | `https://ghi789.apps.dynatrace.com` | Third tenant URL |
-| `DT_3_TOKEN` | No | `dt0s16.ZZZ...` | Third tenant token |
-| `DT_ACTIVE` | No | `staging` | Which tenant MCP connects to (defaults to `DT_1_NAME`) |
+| `DT_NAME` | Yes | `prod` | Label for your tenant |
+| `DT_URL` | Yes | `https://abc123.apps.dynatrace.com` | Tenant URL |
+| `DT_TOKEN_FOR_DTCTL` | Yes | `dt0s16.XXX...` | Platform API token |
 
 ### 2. Create or rebuild the codespace
 
 The setup script runs automatically on every start:
 - Installs `dtctl` (if not present)
-- Registers all provided contexts with dtctl
-- Writes `.claude/settings.local.json` and `.vscode/mcp.json` for the active tenant
+- Registers the tenant context with dtctl
+- Writes `.claude/settings.local.json` and `.vscode/mcp.json` for the tenant
 - Runs `dtctl doctor` to verify the connection
-
-### Switching tenants
-
-Update `DT_ACTIVE` in your Codespace secrets to point to a different context name, then either:
-- Rebuild the codespace, **or**
-- Run `bash .devcontainer/scripts/setup-dynatrace.sh` in the terminal
 
 ### Token scopes
 
